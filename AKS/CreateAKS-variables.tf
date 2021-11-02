@@ -1,19 +1,19 @@
 variable "prefix" {
   description = "Project Code or Name"
   type        = string
-  default = "csc-mon"
+  default = "AFS"
 }
 
 variable env {
   description = "Environment where VMs will be provisioned"
   type        = string
-  default     = "dev"
+  default     = "test"
 }
 
 variable region {
   description = "Management Console Region"
   type        = string
-  default     = "eu"
+  default     = "US"
 }
 
 variable location {

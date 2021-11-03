@@ -1,39 +1,67 @@
-terraform {
-  backend "azurerm" {
-    resource_group_name  = "tamopstfstates"
-    storage_account_name = "tfstatedevop"
-    container_name       = "terraformgithubexample"
-    key                  = "terraformgithubexample.tfstate"
+######################## CONFIGURE MS AZURE PROVIDER ############################
+
+provider "azurerm" {
+        subscription_id = var.subscription_id
+        client_id = var.client_id
+        client_secret = var.client_secret
+        tenant_id = var.tenant_id
+
+        version = "~>2.0"
+        features {}
+}
+
+# refer to a resource group
+data "azurerm_resource_group" "rg" {
+  name = "AFS"
+}
+
+data "azurerm_virtual_network" "vnetPrimary" {
+  name                = "AFS-vnet1"
+  resource_group_name = "AFS"
+}
+
+#refer to a subnet
+data "azurerm_subnet" "subnet" {
+  name                 = "AFS-subnet"
+  virtual_network_name = "AFS-vnet1"
+  resource_group_name  = "AFS-rg"
+}
+
+data "azurerm_network_security_group" "demo" {
+  name                = "AFS-subnet-nsg"
+  resource_group_name = "AFS-rg"
+}
+
+data "azurerm_application_security_group" "demo" {
+  name                = "AFS-asg"
+  resource_group_name = data.azurerm_resource_group.rg.name
+}
+
+resource "azurerm_public_ip" "ifsapprce" {
+  name                = "AFS-pip"
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  allocation_method   = "Static"
+  domain_name_label   = "ifs-${lower(var.custcode)}-dmo"
+}
+
+resource "azurerm_network_interface" "ifsapprce" {
+  name                      = "AFS-nic"
+  location                  = data.azurerm_resource_group.rg.location
+  resource_group_name       = data.azurerm_resource_group.rg.name
+  network_security_group_id = data.azurerm_network_security_group.demo.id
+
+  ip_configuration {
+    name                           = "AFS-conf"
+    subnet_id                      = data.azurerm_subnet.subnet.id
+    private_ip_address_allocation  = "Dynamic"
+    public_ip_address_id           = azurerm_public_ip.ifsapprce.id
+    application_security_group_ids = [data.azurerm_application_security_group.demo.id]
   }
 }
- 
-provider "azurerm" {
-  # The "feature" block is required for AzureRM provider 2.x.
-  # If you're using version 1.x, the "features" block is not allowed.
-  version = "~>2.0"
-  features {}
-}
- 
-data "azurerm_client_config" "current" {}
- 
-#Create Resource Group
-resource "azurerm_resource_group" "tamops" {
-  name     = "tamops"
-  location = "eastus2"
-}
- 
-#Create Virtual Network
-resource "azurerm_virtual_network" "vnet" {
-  name                = "tamops-vnet"
-  address_space       = ["192.168.0.0/16"]
-  location            = "eastus2"
-  resource_group_name = azurerm_resource_group.tamops.name
-}
- 
-# Create Subnet
-resource "azurerm_subnet" "subnet" {
-  name                 = "subnet"
-  resource_group_name  = azurerm_resource_group.tamops.name
-  virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefix       = "192.168.0.0/24"
+
+resource "azurerm_network_interface_application_security_group_association" "demo" {
+  network_interface_id          = azurerm_network_interface.ifsapprce.id
+  ip_configuration_name         = "AFS-conf"
+  application_security_group_id = data.azurerm_application_security_group.demo.id
 }

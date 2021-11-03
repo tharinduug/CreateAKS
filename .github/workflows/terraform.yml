@@ -39,7 +39,7 @@ jobs:
       run: pwd
 
     - name: check the list of files
-      run: ls -a
+      run: cd ./AKS
 
 
     # Checks that all Terraform configuration files adhere to a canonical format

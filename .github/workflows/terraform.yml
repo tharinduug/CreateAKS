@@ -38,6 +38,9 @@ jobs:
     - name: check the PWD
       run: pwd
 
+    - name: list
+      run: ls -al  
+
     - name: check the list of files
       run: cd ./AKS
 

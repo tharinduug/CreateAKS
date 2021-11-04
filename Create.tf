@@ -37,7 +37,7 @@ resource "azurerm_virtual_network" "example" {
   subnet {
     name           = "${lower(var.prefix)}-subnet"
     address_prefix = "10.0.1.0/24"
-    security_group = azurerm_network_security_group.example.id
+    security_group = azurerm_network_security_group.AFS-SG.id
   }
 
 

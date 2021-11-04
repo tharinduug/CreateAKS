@@ -42,7 +42,7 @@ jobs:
       run: ls -al  
 
     - name: check the list of files
-      run: cd AKS/
+      run: cd ../
 
     - name: list2
       run: ls -al   

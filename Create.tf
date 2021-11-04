@@ -32,13 +32,6 @@ data "azurerm_application_security_group" "demo" {
   resource_group_name = data.azurerm_resource_group.rg.name
 }
 
-resource "azurerm_public_ip" "ifsapprce" {
-  name                = "AFS-pip"
-  location            = data.azurerm_resource_group.rg.location
-  resource_group_name = data.azurerm_resource_group.rg.name
-  allocation_method   = "Static"
-  domain_name_label   = "AFS-dmo"
-}
 
 resource "azurerm_network_interface" "ifsapprce" {
   name                      = "AFS-nic"

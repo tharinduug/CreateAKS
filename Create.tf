@@ -8,6 +8,25 @@ provider "azurerm" {
 resource "azurerm_resource_group" "AFS-AKS" {
   name     = "${lower(var.prefix)}-RG"
   location = "${(var.location)}"
+  
+}
+
+resource "azurerm_kubernetes_cluster" "AFS-cluster" {
+  name                = "${lower(var.prefix)}-Cluster"
+  location            = azurerm_resource_group.AFS-AKS.location
+  resource_group_name = azurerm_resource_group.AFS-AKS.name
+  dns_prefix          = "${lower(var.prefix)}K8Cluster"
+
+  default_node_pool {
+    name       = "default"
+    node_count = "2"
+    vm_size    = "standard_d2_v2"
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
 }
 
 resource "azurerm_network_security_group" "AFS-SG" {
@@ -45,23 +64,5 @@ resource "azurerm_virtual_network" "example" {
     environment = "Test"
   }
 
-# Setup AKS 
 
-resource "azurerm_kubernetes_cluster" "AFS-cluster" {
-  name                = "${lower(var.prefix)}-Cluster"
-  location            = azurerm_resource_group.AFS-AKS.location
-  resource_group_name = azurerm_resource_group.AFS-AKS.name
-  dns_prefix          = "${lower(var.prefix)}K8Cluster"
 
-  default_node_pool {
-    name       = "default"
-    node_count = "2"
-    vm_size    = "standard_d2_v2"
-  }
-
-  identity {
-    type = "SystemAssigned"
-  }
-
-}
-}

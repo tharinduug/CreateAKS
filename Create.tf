@@ -5,52 +5,43 @@ provider "azurerm" {
   
 }
 
-resource "azurerm_resource_group" "example" {
-  name     = "example-resources"
-  location = "West Europe"
+resource "azurerm_resource_group" "AFS-AKS" {
+  name     = "${lower(var.prefix)}-RG"
+  location = "${(var.location)}"
 }
 
-resource "azurerm_network_security_group" "example" {
-  name                = "acceptanceTestSecurityGroup1"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
+resource "azurerm_network_security_group" "AFS-SG" {
+  name                = "${lower(var.prefix)}-SG"
+  location            = azurerm_resource_group.AFS-AKS.location
+  resource_group_name = azurerm_resource_group.AFS-AKS.name
 }
 
-resource "azurerm_network_ddos_protection_plan" "example" {
+resource "azurerm_network_ddos_protection_plan" "AFS-DDOS" {
   name                = "ddospplan1"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
+  location            = azurerm_resource_group.AFS-AKS.location
+  resource_group_name = azurerm_resource_group.AFS-AKS.name
 }
 
 resource "azurerm_virtual_network" "example" {
-  name                = "virtualNetwork1"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
+  name                = "${lower(var.prefix)}-vnet"
+  location            = azurerm_resource_group.AFS-AKS.location
+  resource_group_name = azurerm_resource_group.AFS-AKS.name
   address_space       = ["10.0.0.0/16"]
   dns_servers         = ["10.0.0.4", "10.0.0.5"]
 
   ddos_protection_plan {
-    id     = azurerm_network_ddos_protection_plan.example.id
+    id     = azurerm_network_ddos_protection_plan.AFS-DDOS.id
     enable = true
   }
 
   subnet {
-    name           = "subnet1"
+    name           = "${lower(var.prefix)}-subnet"
     address_prefix = "10.0.1.0/24"
-  }
-
-  subnet {
-    name           = "subnet2"
-    address_prefix = "10.0.2.0/24"
-  }
-
-  subnet {
-    name           = "subnet3"
-    address_prefix = "10.0.3.0/24"
     security_group = azurerm_network_security_group.example.id
   }
 
+
   tags = {
-    environment = "Production"
+    environment = "Test"
   }
 }

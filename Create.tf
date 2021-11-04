@@ -5,51 +5,52 @@ provider "azurerm" {
   features {}
 }
 
-# refer to a resource group
-data "azurerm_resource_group" "rg" {
-  name = "AFS"
+resource "azurerm_resource_group" "example" {
+  name     = "example-resources"
+  location = "West Europe"
 }
 
-data "azurerm_virtual_network" "vnetPrimary" {
-  name                = "AFS-vnet1"
-  resource_group_name = "AFS"
+resource "azurerm_network_security_group" "example" {
+  name                = "acceptanceTestSecurityGroup1"
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
 }
 
-#refer to a subnet
-data "azurerm_subnet" "subnet" {
-  name                 = "AFS-subnet"
-  virtual_network_name = "AFS-vnet1"
-  resource_group_name  = "AFS-rg"
+resource "azurerm_network_ddos_protection_plan" "example" {
+  name                = "ddospplan1"
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
 }
 
-data "azurerm_network_security_group" "demo" {
-  name                = "AFS-subnet-nsg"
-  resource_group_name = "AFS-rg"
-}
+resource "azurerm_virtual_network" "example" {
+  name                = "virtualNetwork1"
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+  address_space       = ["10.0.0.0/16"]
+  dns_servers         = ["10.0.0.4", "10.0.0.5"]
 
-data "azurerm_application_security_group" "demo" {
-  name                = "AFS-asg"
-  resource_group_name = data.azurerm_resource_group.rg.name
-}
-
-
-resource "azurerm_network_interface" "ifsapprce" {
-  name                      = "AFS-nic"
-  location                  = data.azurerm_resource_group.rg.location
-  resource_group_name       = data.azurerm_resource_group.rg.name
-  network_security_group_id = data.azurerm_network_security_group.demo.id
-
-  ip_configuration {
-    name                           = "AFS-conf"
-    subnet_id                      = data.azurerm_subnet.subnet.id
-    private_ip_address_allocation  = "Dynamic"
-    public_ip_address_id           = azurerm_public_ip.ifsapprce.id
-    application_security_group_ids = [data.azurerm_application_security_group.demo.id]
+  ddos_protection_plan {
+    id     = azurerm_network_ddos_protection_plan.example.id
+    enable = true
   }
-}
 
-resource "azurerm_network_interface_application_security_group_association" "demo" {
-  network_interface_id          = azurerm_network_interface.ifsapprce.id
-  ip_configuration_name         = "AFS-conf"
-  application_security_group_id = data.azurerm_application_security_group.demo.id
+  subnet {
+    name           = "subnet1"
+    address_prefix = "10.0.1.0/24"
+  }
+
+  subnet {
+    name           = "subnet2"
+    address_prefix = "10.0.2.0/24"
+  }
+
+  subnet {
+    name           = "subnet3"
+    address_prefix = "10.0.3.0/24"
+    security_group = azurerm_network_security_group.example.id
+  }
+
+  tags = {
+    environment = "Production"
+  }
 }

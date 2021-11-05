@@ -13,8 +13,8 @@ resource "azurerm_resource_group" "AFS-AKS" {
 
 resource "azurerm_kubernetes_cluster" "k8s" {
   name                = "${lower(var.prefix)}-aks"
-  location            = azurerm_resource_group.default.location
-  resource_group_name = azurerm_resource_group.default.name
+  location            = azurerm_resource_group.AFS-AKS.location
+  resource_group_name = azurerm_resource_group.AFS-AKS.name
   dns_prefix          = "${lower(var.prefix)}-k8s"
 
   default_node_pool {

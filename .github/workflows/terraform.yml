@@ -67,4 +67,4 @@ jobs:
 
 
     - name: Get K8 node details
-      run: kubectl get node  
+      run: ls -l  

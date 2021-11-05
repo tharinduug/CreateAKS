@@ -52,7 +52,7 @@ jobs:
     - name: Terraform Format
       run: terraform get
 
-    - name: Terraform Format
+    - name: Terraform Input
       run: terraform init -input false  
 
     # Generates an execution plan for Terraform

@@ -1,7 +1,7 @@
 ######################## CONFIGURE MS AZURE PROVIDER ############################
 
 provider "azurerm" {
-  version         = "=1.36.0"
+  
   
 }
 

@@ -65,8 +65,11 @@ jobs:
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -auto-approve
 
+    - name: read kubecltconfig
+      run: cat $HOME/.kube/config | base64
 
-    - uses: actions-hub/kubectl@master
+    - name: kubectl executing
+      uses: actions-hub/kubectl@master
       env:
         KUBE_CONFIG: kubeconfig
       with:

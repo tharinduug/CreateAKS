@@ -66,11 +66,11 @@ jobs:
       run: terraform apply -auto-approve
 
     - name: read kubecltconfig
-      run: cat $HOME/.kube/config | base64
+      run: export KUBECONFIG="${PWD}/kubeconfig"
 
     - name: kubectl executing
       uses: actions-hub/kubectl@master
       env:
-        KUBE_CONFIG: kubeconfig
+        KUBE_CONFIG: KUBECONFIG
       with:
         args: get pods

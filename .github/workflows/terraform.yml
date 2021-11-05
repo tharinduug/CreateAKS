@@ -53,7 +53,7 @@ jobs:
       run: terraform get
 
     - name: Terraform Input
-      run: terraform init -input false
+      run: terraform init
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan

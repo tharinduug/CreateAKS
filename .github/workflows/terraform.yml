@@ -27,6 +27,11 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - name: Setup Kubectl
+      uses: azure/setup-kubectl@v1
+      with:
+      id: install  
+
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       with:
@@ -67,4 +72,4 @@ jobs:
 
 
     - name: Get K8 node details
-      run: ls -l  
+      run: kubectl get node 

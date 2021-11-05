@@ -11,23 +11,24 @@ resource "azurerm_resource_group" "AFS-AKS" {
   
 }
 
-resource "azurerm_kubernetes_cluster" "AFS-cluster" {
-  name                = "${lower(var.prefix)}-Cluster"
-  location            = azurerm_resource_group.AFS-AKS.location
-  resource_group_name = azurerm_resource_group.AFS-AKS.name
-  dns_prefix          = "${lower(var.prefix)}K8Cluster"
+resource "azurerm_kubernetes_cluster" "k8s" {
+  name                = "${lower(var.prefix)}-aks"
+  location            = azurerm_resource_group.default.location
+  resource_group_name = azurerm_resource_group.default.name
+  dns_prefix          = "${lower(var.prefix)}-k8s"
 
   default_node_pool {
-    name       = "default"
-    node_count = "2"
-    vm_size    = "standard_d2_v2"
+    name            = "default"
+    node_count      = 2
+    vm_size         = "Standard_D2_v2"
+    os_disk_size_gb = 30
   }
 
   identity {
     type = "SystemAssigned"
   }
-
 }
+
 
 resource "azurerm_network_security_group" "AFS-SG" {
   name                = "${lower(var.prefix)}-SG"

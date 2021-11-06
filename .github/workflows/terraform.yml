@@ -27,8 +27,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Setup upterm session
-      uses: lhotari/action-upterm@v1  
+   # - name: Setup upterm session
+   #   uses: lhotari/action-upterm@v1  
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
@@ -85,9 +85,18 @@ jobs:
       run: |
         kubectl apply -f deployment.yaml
         kubectl get pods
-        kubectl port-forward $(kubectl get pod -l name=hello-kubernetes --no-headers | awk '{print $1}') 8080:8080
 
     - name: Apply Service
       run: |
         kubectl apply -f service-loadbalancer.yaml
         kubectl get svc
+    
+    - name: get service details
+      run:  kubectl get svc    
+
+    - name: Apply Nginx ingress
+      run: |     
+        kubectl apply -f ingress.yaml
+
+    - name: discribe ingress 
+      run:  kubectl describe ingress hello-kubernetes    

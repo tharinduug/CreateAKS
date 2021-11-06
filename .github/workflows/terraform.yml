@@ -68,6 +68,9 @@ jobs:
     - name: PWD
       run:  pwd
 
+    - name: copy kubeconfig file
+      run: cp -r /home/runner/work/CreateAKS/CreateAKS/kubeconfig /github/home/.kube/config
+
     - name: read config file
       run:  cat /home/runner/work/CreateAKS/CreateAKS/kubeconfig 
 
@@ -78,6 +81,6 @@ jobs:
     - name: kubectl executing
       uses: actions-hub/kubectl@master
       env:
-        KUBE_CONFIG: /home/runner/work/CreateAKS/CreateAKS/kubeconfig
+        KUBE_CONFIG: /github/home/.kube/config | base64
       with:
         args: get pods

@@ -67,9 +67,9 @@ jobs:
 
     - name: read kubecltconfig
       run: 
-        - pwd
-        - ls al
-        - export KUBECONFIG="${PWD}/kubeconfig"
+         pwd
+         ls al
+         export KUBECONFIG="${PWD}/kubeconfig"
 
 
     - name: kubectl executing

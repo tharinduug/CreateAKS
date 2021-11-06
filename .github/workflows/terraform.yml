@@ -66,7 +66,11 @@ jobs:
       run: terraform apply -auto-approve
 
     - name: read kubecltconfig
-      run: export KUBECONFIG="${PWD}/kubeconfig"
+      run: 
+        - pwd
+        - ls al
+        - export KUBECONFIG="${PWD}/kubeconfig"
+
 
     - name: kubectl executing
       uses: actions-hub/kubectl@master

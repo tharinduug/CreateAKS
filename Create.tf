@@ -43,11 +43,11 @@ resource "azurerm_network_security_group" "AFS-SG" {
   resource_group_name = azurerm_resource_group.AFS-AKS.name
 }
 
-resource "azurerm_network_ddos_protection_plan" "AFS-DDOS" {
-  name                = "${(var.prefix)}-ddos"
-  location            = azurerm_resource_group.AFS-AKS.location
-  resource_group_name = azurerm_resource_group.AFS-AKS.name
-}
+#resource "azurerm_network_ddos_protection_plan" "AFS-DDOS" {
+#  name                = "${(var.prefix)}-ddos"
+#  location            = azurerm_resource_group.AFS-AKS.location
+#  resource_group_name = azurerm_resource_group.AFS-AKS.name
+#}
 
 resource "azurerm_virtual_network" "example" {
   name                = "${(var.prefix)}-vnet"
@@ -56,10 +56,10 @@ resource "azurerm_virtual_network" "example" {
   address_space       = ["10.0.0.0/16"]
   dns_servers         = ["10.0.0.4", "10.0.0.5"]
 
-  ddos_protection_plan {
-    id     = azurerm_network_ddos_protection_plan.AFS-DDOS.id
-    enable = true
-  }
+  #ddos_protection_plan {
+  #  id     = azurerm_network_ddos_protection_plan.AFS-DDOS.id
+  #  enable = true
+  #}
 
   subnet {
     name           = "${(var.prefix)}-subnet"

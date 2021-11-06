@@ -7,11 +7,11 @@ metadata:
 spec:
   backend:
     serviceName: {{.Values.application.name}}
-    servicePort: 3080
+    servicePort: 80
   rules:
     - http:
         paths:
           - path: /
             backend:
               serviceName: {{.Values.application.name}}
-              servicePort: 3080
+              servicePort: 80

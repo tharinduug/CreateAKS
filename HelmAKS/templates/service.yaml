@@ -6,7 +6,7 @@ metadata:
     run: {{.Values.application.name}}
 spec:
   ports:
-  - port: 3080
+  - port: 80
     protocol: TCP
   selector:
     app: {{.Values.application.name}}

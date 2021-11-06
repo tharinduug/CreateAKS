@@ -68,17 +68,12 @@ jobs:
     - name: PWD
       run:  pwd
 
-    
-
-
-
     - name: read kubecltconfig
-      run:  export KUBECONFIG="/home/runner/work/CreateAKS/CreateAKS/kubeconfig"
+      run: | 
+        mkdir ${HOME}/.kube
+        echo ${{ secrets.KUBE_CONFIG }} | base64 --decode > ${HOME}/.kube/config
+        cat ${HOME}/.kube/config
 
 
     - name: kubectl executing
-      uses: actions-hub/kubectl@master
-      env:
-        KUBE_CONFIG: /home/runner/work/CreateAKS/CreateAKS/kubeconfig | base64
-      with:
-        args: get pods
+      run: kubectl get node

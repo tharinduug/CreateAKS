@@ -32,8 +32,8 @@ jobs:
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}  
  
-    - name: Terraform Init
-      run: terraform init
+    #- name: Terraform Init
+    #  run: terraform init
 
     - name: check the PWD
       run: pwd
@@ -41,29 +41,29 @@ jobs:
     - name: list
       run: ls -al  
 
-    - name: check the list of files
-      run: cd ../
+    #- name: check the list of files
+    #  run: cd ../
 
-    - name: list2
-      run: ls -al   
+    #- name: list2
+    # run: ls -al   
 
 
     # Checks that all Terraform configuration files adhere to a canonical format
-    - name: Terraform Format
-      run: terraform get
+    #- name: Terraform Format
+    #  run: terraform get
 
-    - name: Terraform Input
-      run: terraform init
+    #- name: Terraform Input
+    #  run: terraform init
 
     # Generates an execution plan for Terraform
-    - name: Terraform Plan
-      run: terraform plan
+    #- name: Terraform Plan
+    #  run: terraform plan
 
       # On push to main, build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-    - name: Terraform Apply
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply -auto-approve
+    #- name: Terraform Apply
+    #  if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    #  run: terraform apply -auto-approve
 
     - name: read kubecltconfig
       run: 

@@ -99,4 +99,20 @@ jobs:
         kubectl apply -f ingress.yaml
 
     - name: discribe ingress 
-      run:  kubectl describe ingress hello-kubernetes    
+      run:  kubectl describe ingress hello-kubernetes   
+
+    # install Helm in ubuntu
+    - name: install helm 01
+      run:  |
+        curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
+        sudo apt-get install apt-transport-https --yes
+        echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list   
+
+    - name: install helm 01
+      run:  |
+        sudo apt-get update
+        sudo apt-get install helm
+
+    - name: execute helm package 
+      run:  helm install release1 HelmAKS-0.1.0.tgz  
+

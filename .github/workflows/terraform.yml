@@ -71,7 +71,7 @@ jobs:
     - name: read kubecltconfig
       run: | 
         mkdir ${HOME}/.kube
-        echo ${{ secrets.KUBE_CONFIG }} | base64 --decode > ${HOME}/.kube/config
+        cp -r /home/runner/work/CreateAKS/CreateAKS/kubeconfig ${HOME}/.kube/config
         cat ${HOME}/.kube/config
 
 

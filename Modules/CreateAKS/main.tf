@@ -5,11 +5,18 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "AFS-AKS" {
-  name     = "${(var.prefix)}-RG"
-  location = "${(var.location)}"
-  
+module "rg" {
+  source = "../rg"
+  name  = "tharindu"
+  location = "East US 2"
+  tags  = "Staging"
 }
+
+#resource "azurerm_resource_group" "AFS-AKS" {
+#  name     = "${(var.prefix)}-RG"
+#  location = "${(var.location)}"
+  
+#}
 
 resource "azurerm_network_security_group" "AFS-SG" {
   name                = "${(var.prefix)}-SG"

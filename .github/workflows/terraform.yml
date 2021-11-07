@@ -43,6 +43,8 @@ jobs:
     - name: Change direcory to the HelmAKS01
       run:  |
         cd ~
+        ls -al
+        pwd
 
     - name: check the ls
       run: ls -al   

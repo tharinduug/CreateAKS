@@ -7,7 +7,7 @@ provider "azurerm" {
 
 module "rg" {
   source = "./Modules/rg"
-  name  = "tharindu"
+  prefix  = "tharindu"
   location = "East US 2"
   tags  = "Staging"
 }

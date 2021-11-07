@@ -53,7 +53,7 @@ resource "azurerm_subnet" "subnet" {
   name                 = "${(var.prefix)}-subnet"
   virtual_network_name = azurerm_virtual_network.example.name
   resource_group_name  = azurerm_resource_group.AFS-AKS.name
-  address_prefixes     = ["10.0.0.0/16"]
+  address_prefixes     = ["10.1.0.0/16"]
 }
 
 

@@ -96,7 +96,7 @@ jobs:
   
     - name: Change direcory to the HelmAKS
       run:  |
-        cd /home/runner/work/CreateAKS/CreateAKS/HelmAKS
+        cd /home/runner/work/CreateAKS/CreateAKS
         pwd
         ls -al
         helm package HelmAKS 

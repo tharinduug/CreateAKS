@@ -29,10 +29,13 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-   # - name: Setup upterm session
-   #   uses: lhotari/action-upterm@v1  
+    - name: Setup upterm session
+      uses: lhotari/action-upterm@v1  
+
     - name: check the pwd for modules
-      run: pwd
+      run: |
+        pwd
+        ls -al
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1

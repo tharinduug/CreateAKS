@@ -35,10 +35,14 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       with:
-        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}  
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
     - name: list
-      run:  ls -al       
+      run:  ls -al   
+
+    - name: Change direcory to the HelmAKS01
+      run:  cd ../../HelmAKS   
+      shell:  bash   
  
     - name: Terraform Init
       run: terraform init

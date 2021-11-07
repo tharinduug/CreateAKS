@@ -96,9 +96,19 @@ jobs:
       run:  |
         sudo apt-get update
         sudo apt-get install helm
-
+  
     - name: Change direcory to the HelmAKS
       run:  cd /home/runner/work/CreateAKS/CreateAKS/HelmAKS
+
+    - name: pwd2
+      run:  pwd
+
+    - name: list3
+      run:  ls -al 
+
+    - name: execute with bash
+      run:  
+        shell: bash cd /home/runner/work/CreateAKS/CreateAKS/HelmAKS
 
     - name: create helm package
       run:  helm package HelmAKS    

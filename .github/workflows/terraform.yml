@@ -108,7 +108,8 @@ jobs:
 
     - name: execute with bash
       run:  
-        shell: bash cd /home/runner/work/CreateAKS/CreateAKS/HelmAKS
+        shell: bash 
+        working-directory:  ../../HelmAKS
 
     - name: create helm package
       run:  helm package HelmAKS    

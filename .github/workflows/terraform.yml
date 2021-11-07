@@ -41,7 +41,8 @@ jobs:
       run:  ls -al   
 
     - name: Change direcory to the HelmAKS01
-      cd: ../
+      run:  |
+        cd: ../
 
     - name: check the ls
       run: ls -al   

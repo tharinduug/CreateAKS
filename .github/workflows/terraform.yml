@@ -37,7 +37,7 @@ jobs:
 
     - name: Change directory to the modules
       run:  | 
-        working-directory: /home/runner/work/CreateAKS/CreateAKS/Modules/CreateAKS
+        cd /home/runner/work/CreateAKS/CreateAKS/Modules/CreateAKS
 
     - name: list
       run: ls -al  

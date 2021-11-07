@@ -8,9 +8,6 @@ provider "azurerm" {
 
 module "rg" {
   source = "./Modules/rg"
-  prefix  = "tharindu"
-  location = "East US 2"
-  tags  = "Staging"
 }
 
 #resource "azurerm_resource_group" "AFS-AKS" {
@@ -18,12 +15,15 @@ module "rg" {
 #  location = "${(var.location)}"
   
 #}
-
-resource "azurerm_network_security_group" "AFS-SG" {
-  name                = "${(var.prefix)}-SG"
-  location            = module.rg.rg_location
+module "nsg" {
+  source = "./Modules/nsg"
   resource_group_name = module.rg.rg_name
 }
+#resource "azurerm_network_security_group" "AFS-SG" {
+#  name                = "${(var.prefix)}-SG"
+#  location            = module.rg.rg_location
+#  resource_group_name = module.rg.rg_name
+#}
 
 #resource "azurerm_network_ddos_protection_plan" "AFS-DDOS" {
 #  name                = "${(var.prefix)}-ddos"
@@ -34,7 +34,7 @@ resource "azurerm_network_security_group" "AFS-SG" {
 resource "azurerm_virtual_network" "example" {
   name                = "${(var.prefix)}-vnet"
   location            = azurerm_resource_group.AFS-AKS.location
-  resource_group_name = azurerm_resource_group.AFS-AKS.name
+  resource_group_name = module.rg.rg_name
   address_space       = ["10.1.0.0/16"]
 
   #ddos_protection_plan {

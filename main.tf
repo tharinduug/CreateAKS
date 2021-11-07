@@ -5,6 +5,7 @@ provider "azurerm" {
   features {}
 }
 
+
 module "rg" {
   source = "./Modules/rg"
   prefix  = "tharindu"
@@ -20,8 +21,8 @@ module "rg" {
 
 resource "azurerm_network_security_group" "AFS-SG" {
   name                = "${(var.prefix)}-SG"
-  location            = module.rg.location
-  resource_group_name = module.rg.name
+  location            = module.rg.rg_location
+  resource_group_name = module.rg.rg_name
 }
 
 #resource "azurerm_network_ddos_protection_plan" "AFS-DDOS" {

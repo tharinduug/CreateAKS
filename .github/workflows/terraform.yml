@@ -35,19 +35,7 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       with:
-        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-
-    - name: list
-      run:  ls -al   
-
-    - name: Change direcory to the HelmAKS01
-      run:  |
-        cd ~
-        ls -al
-        pwd
-
-    - name: check the ls
-      run: ls -al   
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}   
  
     - name: Terraform Init
       run: terraform init
@@ -107,23 +95,18 @@ jobs:
         sudo apt-get install helm
   
     - name: Change direcory to the HelmAKS
-      run:  cd /home/runner/work/CreateAKS/CreateAKS/HelmAKS
+      run:  |
+      cd /home/runner/work/CreateAKS/CreateAKS/HelmAKS
+      pwd
+      ls -al
+      helm package HelmAKS 
+      ls -al
+      helm install release1 HelmAKS-0.1.0.tgz   
 
-    - name: pwd2
-      run:  pwd
-
-    - name: list3
-      run:  ls -al 
-
-
-    - name: create helm package
-      run:  helm package HelmAKS    
-
-    - name: get directory details
-      run:  la- al  
-
-    - name: execute helm package 
-      run:  helm install release1 HelmAKS-0.1.0.tgz     
+    - uses: actions/upload-artifact@v2
+      with:
+        name: HelmAKS-0.1.0.tgz
+        path: /home/runner/work/CreateAKS/CreateAKS/HelmAKS/    
 
     #- name: kubectl executing
     #  run: kubectl get node

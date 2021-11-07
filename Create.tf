@@ -35,11 +35,11 @@ resource "azurerm_virtual_network" "example" {
   #  enable = true
   #}
 
-  subnet {
-    name           = "${(var.prefix)}-subnet"
-    address_prefix = "10.0.1.0/24"
-    security_group = azurerm_network_security_group.AFS-SG.id
-  }
+  #subnet {
+  #  name           = "${(var.prefix)}-subnet"
+  #  address_prefix = "10.0.1.0/24"
+  #  security_group = azurerm_network_security_group.AFS-SG.id
+  #}
 
 
   tags = {
@@ -48,6 +48,13 @@ resource "azurerm_virtual_network" "example" {
 
 
 }
+
+data "azurerm_subnet" "subnet" {
+  name                 = "${(var.prefix)}-subnet"
+  virtual_network_name = azurerm_virtual_network.example.name
+  resource_group_name  = azurerm_resource_group.AFS-AKS.name
+}
+
 
 # AKS Cluster creation
 
@@ -62,7 +69,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     node_count      = 2
     vm_size         = "Standard_D2_v2"
     os_disk_size_gb = 30
-    vnet_subnet_id  = azurerm_virtual_network.example.subnet.id
+    vnet_subnet_id  = azurerm_virtual_network.example.subnet
   }
 
   identity {

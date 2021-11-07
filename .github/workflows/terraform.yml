@@ -96,12 +96,12 @@ jobs:
   
     - name: Change direcory to the HelmAKS
       run:  |
-      cd /home/runner/work/CreateAKS/CreateAKS/HelmAKS
-      pwd
-      ls -al
-      helm package HelmAKS 
-      ls -al
-      helm install release1 HelmAKS-0.1.0.tgz   
+        cd /home/runner/work/CreateAKS/CreateAKS/HelmAKS
+        pwd
+        ls -al
+        helm package HelmAKS 
+        ls -al
+        helm install release1 HelmAKS-0.1.0.tgz   
 
     - uses: actions/upload-artifact@v2
       with:

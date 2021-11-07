@@ -106,7 +106,7 @@ jobs:
     - name: list3
       run:  ls -al 
 
-    - name: execute with bash
+    defaults:
       run:  
         shell: bash 
         working-directory:  ../../HelmAKS

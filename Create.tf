@@ -64,6 +64,8 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   location            = azurerm_resource_group.AFS-AKS.location
   resource_group_name = azurerm_resource_group.AFS-AKS.name
   dns_prefix          = "${(var.prefix)}-k8s"
+  private_cluster_enabled = true
+  
 
   default_node_pool {
     name            = "default"

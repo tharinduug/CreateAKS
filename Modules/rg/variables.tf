@@ -10,8 +10,3 @@ variable location {
   default     = "West US 2"
 }
 
-variable tags {
-  description = "taging for env"
-  type        = string
-  default     = "Demo"
-}

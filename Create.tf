@@ -11,32 +11,6 @@ resource "azurerm_resource_group" "AFS-AKS" {
   
 }
 
-resource "azurerm_kubernetes_cluster" "k8s" {
-  name                = "${(var.prefix)}-aks"
-  location            = azurerm_resource_group.AFS-AKS.location
-  resource_group_name = azurerm_resource_group.AFS-AKS.name
-  dns_prefix          = "${(var.prefix)}-k8s"
-
-  default_node_pool {
-    name            = "default"
-    node_count      = 2
-    vm_size         = "Standard_D2_v2"
-    os_disk_size_gb = 30
-  }
-
-  identity {
-    type = "SystemAssigned"
-  }
-
-    addon_profile {
-        http_application_routing {
-         enabled = true
-    }
-  }
-
-}
-
-
 resource "azurerm_network_security_group" "AFS-SG" {
   name                = "${(var.prefix)}-SG"
   location            = azurerm_resource_group.AFS-AKS.location
@@ -72,5 +46,33 @@ resource "azurerm_virtual_network" "example" {
     environment = "Test"
   }
 
+
+}
+
+# AKS Cluster creation
+
+resource "azurerm_kubernetes_cluster" "k8s" {
+  name                = "${(var.prefix)}-aks"
+  location            = azurerm_resource_group.AFS-AKS.location
+  resource_group_name = azurerm_resource_group.AFS-AKS.name
+  dns_prefix          = "${(var.prefix)}-k8s"
+
+  default_node_pool {
+    name            = "default"
+    node_count      = 2
+    vm_size         = "Standard_D2_v2"
+    os_disk_size_gb = 30
+    vnet_subnet_id  = azurerm_virtual_network.example.subnet.id
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+    addon_profile {
+        http_application_routing {
+         enabled = true
+    }
+  }
 
 }

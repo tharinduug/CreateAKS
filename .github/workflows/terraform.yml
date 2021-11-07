@@ -34,15 +34,19 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}  
+
+    - name: Change directory to the modules
+      run:  cd /home/runner/work/CreateAKS/CreateAKS/Modules/CreateAKS
+
+    - name: list
+      run: ls -al  
  
     - name: Terraform Init
       run: terraform init
 
     - name: check the PWD
       run: pwd
-
-    - name: list
-      run: ls -al  
+  
 
     #- name: check the list of files
     #  run: cd ../
@@ -71,35 +75,16 @@ jobs:
     - name: PWD
       run:  pwd
 
+    - uses: actions/upload-artifact@v2
+      with:
+        name: kubeconfig
+        path: /home/runner/work/CreateAKS/CreateAKS/kubeconfig  
+
     - name: read kubecltconfig
       run: | 
         mkdir ${HOME}/.kube
         cp -r /home/runner/work/CreateAKS/CreateAKS/kubeconfig ${HOME}/.kube/config
         cat ${HOME}/.kube/config
-
-
-    - name: kubectl executing
-      run: kubectl get node
-
-    - name: Apply deployment
-      run: |
-        kubectl apply -f deployment.yaml
-        kubectl get pods
-
-    - name: Apply Service
-      run: |
-        kubectl apply -f service.yaml
-        kubectl get svc
-    
-    - name: get service details
-      run:  kubectl get svc    
-
-    - name: Apply Nginx ingress
-      run: |     
-        kubectl apply -f ingress.yaml
-
-    - name: discribe ingress 
-      run:  kubectl describe ingress hello-kubernetes   
 
     # install Helm in ubuntu
     - name: install helm 01
@@ -108,11 +93,51 @@ jobs:
         sudo apt-get install apt-transport-https --yes
         echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list   
 
-    - name: install helm 01
+    - name: update helm binary
       run:  |
         sudo apt-get update
         sudo apt-get install helm
 
+    - name: Change direcory to the HelmAKS
+      run:  cd /home/runner/work/CreateAKS/CreateAKS/HelmAKS
+
+    - name: create helm package
+      run:  helm package HelmAKS    
+
+    - name: get directory details
+      run:  la- al  
+
     - name: execute helm package 
-      run:  helm install release1 HelmAKS-0.1.0.tgz  
+      run:  helm install release1 HelmAKS-0.1.0.tgz     
+
+    #- name: kubectl executing
+    #  run: kubectl get node
+
+    #- name: Apply deployment
+    #  run: |
+    #    kubectl apply -f deployment.yaml
+    #    kubectl get pods
+
+    #- name: Apply Service
+    #  run: |
+    #    kubectl apply -f service.yaml
+    #    kubectl get svc
+    
+    - name: get service details
+      run:  kubectl get svc    
+
+    #- name: Apply Nginx ingress
+    #  run: |     
+    #    kubectl apply -f ingress.yaml
+
+    - name: discribe ingress 
+      run:  kubectl describe ingress hello-kubernetes     
+
+    #- name: install helm 01
+    #  run:  |
+    #    sudo apt-get update
+    #    sudo apt-get install helm
+
+    #- name: execute helm package 
+    #  run:  helm install release1 HelmAKS-0.1.0.tgz  
 

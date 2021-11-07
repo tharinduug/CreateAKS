@@ -2,11 +2,11 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 2
+replicaCount: 1
 
 image:
-  repository: nginx
+  repository: paulbouwer/hello-kubernetes:1.8
   pullPolicy: Always
 
 application:
-  name: nginx
+  name: hello-kubernetes

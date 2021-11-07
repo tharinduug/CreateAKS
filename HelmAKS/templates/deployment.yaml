@@ -1,27 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
-  labels:
-    app: react-webapp
   name: {{.Values.application.name}}
 spec:
-  replicas: {{.Values.replicaCount}}
   selector:
     matchLabels:
-      app: react-webapp
-  strategy: {}
+      name: {{.Values.application.name}}
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        app: react-webapp
+        name: {{.Values.application.name}}
     spec:
       containers:
-      - image: {{.Values.image.repository}}
-        name: webapp
-        imagePullPolicy: {{.Values.image.pullPolicy}}
-        resources: {}
-        ports:
-          - containerPort: 3080 
-status: {}
+        - name: app
+          image: {{.values.image.repository}}
+          ports:
+            - containerPort: 8080

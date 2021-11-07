@@ -8,6 +8,9 @@ provider "azurerm" {
 
 module "rg" {
   source = "./Modules/rg"
+  prefix = "Test"
+  location  = "West US 2"
+  tags = "Stage"
 }
 
 #resource "azurerm_resource_group" "AFS-AKS" {

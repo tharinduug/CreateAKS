@@ -31,6 +31,8 @@ jobs:
 
    # - name: Setup upterm session
    #   uses: lhotari/action-upterm@v1  
+    - name: check the pwd for modules
+      run: pwd
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1

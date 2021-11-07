@@ -49,10 +49,11 @@ resource "azurerm_virtual_network" "example" {
 
 }
 
-data "azurerm_subnet" "subnet" {
+resource "azurerm_subnet" "subnet" {
   name                 = "${(var.prefix)}-subnet"
   virtual_network_name = azurerm_virtual_network.example.name
   resource_group_name  = azurerm_resource_group.AFS-AKS.name
+  address_prefixes     = ["10.0.1.0/24"]
 }
 
 
@@ -69,7 +70,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     node_count      = 2
     vm_size         = "Standard_D2_v2"
     os_disk_size_gb = 30
-    vnet_subnet_id  = data.azurerm_subnet.subnet.id
+    vnet_subnet_id  = azurerm_subnet.subnet.id
   }
 
   identity {

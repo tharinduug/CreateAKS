@@ -37,8 +37,9 @@ jobs:
 
     - name: list
       run: |
+        cd Modules/CreateAKS  
         ls -al
-        cd /home/runner/work/CreateAKS/CreateAKS/Modules/CreateAKS  
+          
  
     - name: Terraform Init
       run: terraform init

@@ -106,10 +106,6 @@ jobs:
     - name: list3
       run:  ls -al 
 
-    defaults:
-      run:  
-        shell: bash 
-        working-directory:  ../../HelmAKS
 
     - name: create helm package
       run:  helm package HelmAKS    

@@ -53,7 +53,6 @@ resource "azurerm_subnet" "subnet" {
   name                 = "${(var.prefix)}-subnet"
   virtual_network_name = azurerm_virtual_network.example.name
   resource_group_name  = azurerm_resource_group.AFS-AKS.name
-  address_prefixes     = ["10.0.0.0/24"]
 }
 
 
@@ -64,7 +63,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   location            = azurerm_resource_group.AFS-AKS.location
   resource_group_name = azurerm_resource_group.AFS-AKS.name
   dns_prefix          = "${(var.prefix)}-k8s"
-  private_cluster_enabled = true
+  
   
 
   default_node_pool {

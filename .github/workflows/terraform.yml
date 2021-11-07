@@ -82,7 +82,7 @@ jobs:
     - name: read kubecltconfig
       run: | 
         mkdir ${HOME}/.kube
-        cp -r /home/runner/work/CreateAKS/CreateAKS/Modules/CreateAKS ${HOME}/.kube/config
+        cp -r /home/runner/work/CreateAKS/CreateAKS/Modules/CreateAKS/kubeconfig ${HOME}/.kube/config
         cat ${HOME}/.kube/config
 
     # install Helm in ubuntu

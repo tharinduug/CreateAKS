@@ -17,7 +17,7 @@ module "rg" {
 #}
 module "nsg" {
   source = "./Modules/nsg"
-  resource_group_name = ["${module.rg.rg_name}"]
+  
 }
 #resource "azurerm_network_security_group" "AFS-SG" {
 #  name                = "${(var.prefix)}-SG"

@@ -10,7 +10,6 @@ module "rg" {
   prefix  = "tharindu"
   location = "East US 2"
   tags  = "Staging"
-  name  = ""
 }
 
 #resource "azurerm_resource_group" "AFS-AKS" {

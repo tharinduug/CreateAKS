@@ -69,7 +69,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     node_count      = 2
     vm_size         = "Standard_D2_v2"
     os_disk_size_gb = 30
-    vnet_subnet_id  = azurerm_virtual_network.example.subnet
+    vnet_subnet_id  = data.azurerm_subnet.subnet.id
   }
 
   identity {

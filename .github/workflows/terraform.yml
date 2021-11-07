@@ -42,7 +42,7 @@ jobs:
 
     - name: Change direcory to the HelmAKS01
       run:  |
-        cd: ../
+        cd ~
 
     - name: check the ls
       run: ls -al   

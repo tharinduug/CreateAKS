@@ -24,11 +24,11 @@ module "nsg" {
   location = "West US 2"
   rgname = "THHH"
 }
-resource "azurerm_network_security_group" "AFS-SG" {
-  name                = "${(var.prefix)}-SG"
-  location            = module.rg.rg_location
-  resource_group_name = module.rg.rg_name
-}
+#resource "azurerm_network_security_group" "AFS-SG" {
+# name                = "${(var.prefix)}-SG"
+#  location            = module.rg.rg_location
+#  resource_group_name = module.rg.rg_name
+#}
 
 #resource "azurerm_network_ddos_protection_plan" "AFS-DDOS" {
 #  name                = "${(var.prefix)}-ddos"

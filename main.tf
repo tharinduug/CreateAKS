@@ -18,12 +18,12 @@ module "rg" {
 #  location = "${(var.location)}"
   
 #}
-module "nsg" {
-  source = "./Modules/nsg"
-  prefix = "Test"
-  location = "West US 2"
-  rgname = "THHH"
-}
+#module "nsg" {
+#  source = "./Modules/nsg"
+#  prefix = "Test"
+#  location = "West US 2"
+#  rgname = "THHH"
+#}
 #resource "azurerm_network_security_group" "AFS-SG" {
 # name                = "${(var.prefix)}-SG"
 #  location            = module.rg.rg_location

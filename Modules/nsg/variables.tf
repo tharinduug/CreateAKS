@@ -9,6 +9,6 @@ variable location {
   default     = "West US 2"
 }
 
-variable rg_name {
+variable rgname {
   type        = string
 }

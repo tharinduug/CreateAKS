@@ -8,3 +8,7 @@ variable location {
   type        = string
   default     = "West US 2"
 }
+
+variable rg_name {
+  type        = string
+}

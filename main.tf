@@ -21,7 +21,7 @@ module "rg" {
 module "nsg" {
   source = "./Modules/nsg"
   prefix = "Test"
-  location            = "West US 2"
+  location = "West US 2"
   rg_name = module.rg.rg_name
 }
 resource "azurerm_network_security_group" "AFS-SG" {

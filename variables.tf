@@ -46,10 +46,6 @@ variable "tenant_id" {
   default = "b7dc2e83-5607-4300-8118-2452b2e0b461"
 }
 
-variable "rgname" {
-  type        = string
-}
-
 variable "lb_subnet" {
   description = "Subnet"
   type        = string

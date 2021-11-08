@@ -3,3 +3,8 @@ variable "prefix" {
   type        = string
   default = "AFS"
 }
+variable location {
+  description = "Azure Region"
+  type        = string
+  default     = "West US 2"
+}

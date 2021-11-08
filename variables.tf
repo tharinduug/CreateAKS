@@ -46,10 +46,8 @@ variable "tenant_id" {
   default = "tenant_id"
 }
 
-variable "rg" {
-  description = "Resource Group"
+variable rg_name {
   type        = string
-  default = "csc-proj-tcs-moni-poc-rg"
 }
 
 variable "lb_subnet" {

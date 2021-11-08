@@ -76,8 +76,8 @@ resource "azurerm_subnet" "subnet" {
 
 resource "azurerm_kubernetes_cluster" "k8s" {
   name                = "${(var.prefix)}-aks"
-  location            = module.rg.rg_location
-  resource_group_name = module.rg.rg_name
+  location            = azurerm_resource_group.AFS-AKS.location
+  resource_group_name = azurerm_resource_group.AFS-AKS.name
   dns_prefix          = "${(var.prefix)}-k8s"
   
   

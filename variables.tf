@@ -25,25 +25,25 @@ variable location {
 variable "subscription_id" {
   description = "Subscription ID"
   type        = string
-  default = "subscription_id"
+  default = "26362789-7f7b-4206-853f-511d344e5772"
 }
 
 variable "client_id" {
   description = "Client ID"
   type        = string
-  default = "client_id"
+  default = "7455661b-baa7-4df1-b000-b6758660b8a3"
 }
 
 variable "client_secret" {
   description = "Client Secret"
   type        = string
-  default = "client_secret"
+  default = "zNS7Q~yi2NtL2mFx6xfW9NiV84D1oElRguJpn"
 }
 
 variable "tenant_id" {
   description = "Tenant ID"
   type        = string
-  default = "tenant_id"
+  default = "b7dc2e83-5607-4300-8118-2452b2e0b461"
 }
 
 variable "rgname" {

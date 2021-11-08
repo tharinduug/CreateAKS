@@ -1,7 +1,10 @@
 ######################## CONFIGURE MS AZURE PROVIDER ############################
 
 provider "azurerm" {
-  
+  subscription_id = var.azure_subscription_id
+  client_id       = var.azure_client_id
+  client_secret   = var.azure_client_secret
+  tenant_id       = var.azure_tenant_id
   features {}
 }
 
@@ -26,8 +29,8 @@ resource "azurerm_resource_group" "AFS-AKS" {
 #}
 resource "azurerm_network_security_group" "AFS-SG" {
   name                = "${(var.prefix)}-SG"
-  location            = module.rg.rg_location
-  resource_group_name = module.rg.rg_name
+  location            = azurerm_resource_group.AFS-AKS.location
+  resource_group_name = azurerm_resource_group.AFS-AKS.name
 }
 
 #resource "azurerm_network_ddos_protection_plan" "AFS-DDOS" {
@@ -38,8 +41,8 @@ resource "azurerm_network_security_group" "AFS-SG" {
 
 resource "azurerm_virtual_network" "example" {
   name                = "${(var.prefix)}-vnet"
-  location            = module.rg.rg_location
-  resource_group_name = module.rg.rg_name
+  location            = azurerm_resource_group.AFS-AKS.location
+  resource_group_name = azurerm_resource_group.AFS-AKS.name
   address_space       = ["10.1.0.0/16"]
 
   #ddos_protection_plan {
@@ -64,7 +67,7 @@ resource "azurerm_virtual_network" "example" {
 resource "azurerm_subnet" "subnet" {
   name                 = "${(var.prefix)}-subnet"
   virtual_network_name = azurerm_virtual_network.example.name
-  resource_group_name  = module.rg.rg_name
+  resource_group_name  = azurerm_resource_group.AFS-AKS.name
   address_prefixes     = ["10.1.0.0/22"]
 }
 

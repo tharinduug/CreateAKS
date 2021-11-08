@@ -46,7 +46,7 @@ variable "tenant_id" {
   default = "tenant_id"
 }
 
-variable rgname {
+variable "rgname" {
   type        = string
 }
 

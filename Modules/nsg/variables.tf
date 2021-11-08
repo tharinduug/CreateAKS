@@ -3,12 +3,12 @@ variable "prefix" {
   type        = string
   default = "AFS"
 }
-variable location {
+variable "location" {
   description = "Azure Region"
   type        = string
   default     = "West US 2"
 }
 
-variable rgname {
+variable "rgname" {
   type        = string
 }

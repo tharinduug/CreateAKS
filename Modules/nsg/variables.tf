@@ -11,4 +11,5 @@ variable "location" {
 
 variable "rgname" {
   type        = string
+  default     = "EEEEE"
 }

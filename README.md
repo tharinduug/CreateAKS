@@ -1,11 +1,15 @@
 AKS Cluster with Helm Chart deployment.
 
-In this code saved all sensitive data in the github secrets. Therefore please use your own details replace before you execute pipeline.
-Here used github terraform action for build the deplyment and it's auto tigger after push the code to the repository.
 
-Install Nginx ingress controller 
+1. Created SPN account with full permission in Azure AD to deploy all required actions. All sensitive data stored in the github secrets.
+ ( Clinet ID / Cliet Secret / Tenant id / subscription details )    
 
-1. In the azure, they are provided addon for install ingress contorller when create K8 cluster
+    Therefore please use your own details replace before you execute pipeline.
+    Here used github terraform action for build the deplyment and it's auto tigger after push the code to the repository.
+
+2.  In the azure, they are provided addon for install ingress contorller when create K8 cluster
+
+Install Nginx ingress controller
 
  addon_profile {
         http_application_routing {

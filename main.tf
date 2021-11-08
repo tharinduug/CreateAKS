@@ -6,16 +6,16 @@ provider "azurerm" {
 }
 
 
-module "rg" {
-  source = "./Modules/rg"
-  prefix = "Test"
-  location  = "West US 2"
+#module "rg" {
+#  source = "./Modules/rg"
+#  prefix = "Test"
+#  location  = "West US 2"
 
-}
+#}
 
-#resource "azurerm_resource_group" "AFS-AKS" {
-#  name     = "${(var.prefix)}-RG"
-#  location = "${(var.location)}"
+resource "azurerm_resource_group" "AFS-AKS" {
+  name     = "${(var.prefix)}-RG"
+  location = "${(var.location)}"
   
 #}
 #module "nsg" {

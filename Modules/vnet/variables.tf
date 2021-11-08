@@ -13,6 +13,6 @@ variable location {
 variable tags {
   description = "Tags data"
   type        = string
-  default     = "Demo"
+  default     = "Dev"
 }
 

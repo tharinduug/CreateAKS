@@ -1,76 +1,17 @@
 ######################## CONFIGURE MS AZURE PROVIDER ############################
 
 provider "azurerm" {
-  #subscription_id = var.azure_subscription_id
-  #client_id       = var.azure_client_id
-  #client_secret   = var.azure_client_secret
-  #tenant_id       = var.azure_tenant_id
+
   features {}
 }
 
 
 module "rg" {
-  source = "./Modules/rg"
-  prefix = "Test"
+  source = "./Modules/vnet"
+  prefix = "AFS"
   location  = "West US 2"
 
 }
-
-#resource "azurerm_resource_group" "AFS-AKS" {
-#  name     = "${(var.prefix)}-RG"
-#  location = "${(var.location)}"
-  
-#}
-#module "nsg" {
-#  source = "./Modules/nsg"
-#  prefix = "Test"
-#  location = "West US 2"
-#  rgname = "THHH"
-#}
-#resource "azurerm_network_security_group" "AFS-SG" {
-#  name                = "${(var.prefix)}-SG"
-#  location            = azurerm_resource_group.AFS-AKS.location
-#  resource_group_name = azurerm_resource_group.AFS-AKS.name
-#}
-
-#resource "azurerm_network_ddos_protection_plan" "AFS-DDOS" {
-#  name                = "${(var.prefix)}-ddos"
-#  location            = azurerm_resource_group.AFS-AKS.location
-#  resource_group_name = azurerm_resource_group.AFS-AKS.name
-#}
-
-#resource "azurerm_virtual_network" "example" {
-#  name                = "${(var.prefix)}-vnet"
-#  location            = azurerm_resource_group.AFS-AKS.location
-#  resource_group_name = azurerm_resource_group.AFS-AKS.name
-#  address_space       = ["10.1.0.0/16"]
-
-  #ddos_protection_plan {
-  #  id     = azurerm_network_ddos_protection_plan.AFS-DDOS.id
-  #  enable = true
-  #}
-
-  #subnet {
-  #  name           = "${(var.prefix)}-subnet"
-  #  address_prefix = "10.0.1.0/24"
-  #  security_group = azurerm_network_security_group.AFS-SG.id
-  #}
-
-
-  #tags = {
-  #  environment = "Test"
-  #}
-
-
-#}
-
-#resource "azurerm_subnet" "subnet" {
-#  name                 = "${(var.prefix)}-subnet"
-#  virtual_network_name = azurerm_virtual_network.example.name
-#  resource_group_name  = azurerm_resource_group.AFS-AKS.name
-#  address_prefixes     = ["10.1.0.0/22"]
-#}
-
 
 # AKS Cluster creation
 

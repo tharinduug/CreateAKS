@@ -32,11 +32,6 @@ jobs:
     #- name: Setup upterm session
     #  uses: lhotari/action-upterm@v1  
 
-    - name: check the pwd for modules
-      run: |
-        pwd
-        ls -al
-
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       with:
@@ -44,17 +39,6 @@ jobs:
  
     - name: Terraform Init
       run: terraform init
-
-    - name: check the PWD
-      run: pwd
-  
-
-    #- name: check the list of files
-    #  run: cd ../
-
-    #- name: list2
-    # run: ls -al   
-
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
@@ -73,15 +57,13 @@ jobs:
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -auto-approve
 
-    - name: PWD
-      run:  pwd
-
+      # upload kubeconfig file as artifact
     - uses: actions/upload-artifact@v2
       with:
         name: kubeconfig
         path: /home/runner/work/CreateAKS/CreateAKS/
 
-    - name: read kubecltconfig
+    - name: copy kubecltconfig in the folder
       run: | 
         mkdir ${HOME}/.kube
         cp -r /home/runner/work/CreateAKS/CreateAKS/kubeconfig ${HOME}/.kube/config
@@ -98,7 +80,7 @@ jobs:
       run:  |
         sudo apt-get update
         sudo apt-get install helm
-  
+    # execute package module from Helm Chart
     - name: Change direcory to the HelmAKS
       run:  |
         cd /home/runner/work/CreateAKS/CreateAKS
@@ -107,40 +89,30 @@ jobs:
         helm package HelmAKS 
         ls -al
         helm install release1 HelmAKS-0.1.0.tgz   
-
+     # upload Helm package file as artifact
     - uses: actions/upload-artifact@v2
       with:
         name: HelmAKS-0.1.0.tgz
         path: /home/runner/work/CreateAKS/CreateAKS/HelmAKS/    
 
-    #- name: kubectl executing
-    #  run: kubectl get node
+      # Get node details
+    - name: get node details
+      run: kubectl get node
 
-    #- name: Apply deployment
-    #  run: |
-    #    kubectl apply -f deployment.yaml
-    #    kubectl get pods
-
-    #- name: Apply Service
-    #  run: |
-    #    kubectl apply -f service.yaml
-    #    kubectl get svc
+     # Get pod details  
+    - name: get pod details
+      run: kubectl get pods
     
+     # Get service details
     - name: get service details
-      run:  kubectl get svc    
+      run:  kubectl get svc  
 
-    #- name: Apply Nginx ingress
-    #  run: |     
-    #    kubectl apply -f ingress.yaml
-
+     # Get ingress details
     - name: discribe ingress 
       run:  kubectl describe ingress hello-kubernetes     
 
-    #- name: install helm 01
-    #  run:  |
-    #    sudo apt-get update
-    #    sudo apt-get install helm
+    - name: get nginx ingress controller details
+      run:  kubectl logs -f deploy/addon-http-application-routing-nginx-ingress-controller -n kube-system
 
-    #- name: execute helm package 
-    #  run:  helm install release1 HelmAKS-0.1.0.tgz  
+    
 

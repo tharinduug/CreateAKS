@@ -1,10 +1,10 @@
 output "rg_name" {
-  value       = module.rg.name
+  value       = azurerm_resource_group.AFS-AKS.name
   description = "RG name"
 }
 
 
 output "rg_location" {
-  value       = module.rg.location
+  value       = azurerm_resource_group.AFS-AKS.location
   description = "RG location"
 }

@@ -111,8 +111,6 @@ jobs:
     - name: discribe ingress 
       run:  kubectl describe ingress hello-kubernetes     
 
-    - name: get nginx ingress controller details
-      run:  kubectl logs -f deploy/addon-http-application-routing-nginx-ingress-controller -n kube-system
 
     
 

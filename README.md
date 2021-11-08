@@ -76,4 +76,14 @@ Events:       <none>
 
     https://Address/
 
+6. get more details ( logs ) for ingress controller,  please use below command
 
+
+kubectl logs -f deploy/addon-http-application-routing-nginx-ingress-controller -n kube-system
+
+-------------------------------------------------------------------------------
+NGINX Ingress controller
+  Release:    0.19.0
+  Build:      git-05025d6
+  Repository: https://github.com/kubernetes/ingress-nginx.git
+-------------------------------------------------------------------------------

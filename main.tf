@@ -9,29 +9,29 @@ provider "azurerm" {
 }
 
 
-#module "rg" {
-#  source = "./Modules/rg"
-#  prefix = "Test"
-#  location  = "West US 2"
+module "rg" {
+  source = "./Modules/rg"
+  prefix = "Test"
+  location  = "West US 2"
 
-#}
-
-resource "azurerm_resource_group" "AFS-AKS" {
-  name     = "${(var.prefix)}-RG"
-  location = "${(var.location)}"
-  
 }
+
+#resource "azurerm_resource_group" "AFS-AKS" {
+#  name     = "${(var.prefix)}-RG"
+#  location = "${(var.location)}"
+  
+#}
 #module "nsg" {
 #  source = "./Modules/nsg"
 #  prefix = "Test"
 #  location = "West US 2"
 #  rgname = "THHH"
 #}
-resource "azurerm_network_security_group" "AFS-SG" {
-  name                = "${(var.prefix)}-SG"
-  location            = azurerm_resource_group.AFS-AKS.location
-  resource_group_name = azurerm_resource_group.AFS-AKS.name
-}
+#resource "azurerm_network_security_group" "AFS-SG" {
+#  name                = "${(var.prefix)}-SG"
+#  location            = azurerm_resource_group.AFS-AKS.location
+#  resource_group_name = azurerm_resource_group.AFS-AKS.name
+#}
 
 #resource "azurerm_network_ddos_protection_plan" "AFS-DDOS" {
 #  name                = "${(var.prefix)}-ddos"
@@ -39,11 +39,11 @@ resource "azurerm_network_security_group" "AFS-SG" {
 #  resource_group_name = azurerm_resource_group.AFS-AKS.name
 #}
 
-resource "azurerm_virtual_network" "example" {
-  name                = "${(var.prefix)}-vnet"
-  location            = azurerm_resource_group.AFS-AKS.location
-  resource_group_name = azurerm_resource_group.AFS-AKS.name
-  address_space       = ["10.1.0.0/16"]
+#resource "azurerm_virtual_network" "example" {
+#  name                = "${(var.prefix)}-vnet"
+#  location            = azurerm_resource_group.AFS-AKS.location
+#  resource_group_name = azurerm_resource_group.AFS-AKS.name
+#  address_space       = ["10.1.0.0/16"]
 
   #ddos_protection_plan {
   #  id     = azurerm_network_ddos_protection_plan.AFS-DDOS.id
@@ -57,27 +57,27 @@ resource "azurerm_virtual_network" "example" {
   #}
 
 
-  tags = {
-    environment = "Test"
-  }
+  #tags = {
+  #  environment = "Test"
+  #}
 
 
-}
+#}
 
-resource "azurerm_subnet" "subnet" {
-  name                 = "${(var.prefix)}-subnet"
-  virtual_network_name = azurerm_virtual_network.example.name
-  resource_group_name  = azurerm_resource_group.AFS-AKS.name
-  address_prefixes     = ["10.1.0.0/22"]
-}
+#resource "azurerm_subnet" "subnet" {
+#  name                 = "${(var.prefix)}-subnet"
+#  virtual_network_name = azurerm_virtual_network.example.name
+#  resource_group_name  = azurerm_resource_group.AFS-AKS.name
+#  address_prefixes     = ["10.1.0.0/22"]
+#}
 
 
 # AKS Cluster creation
 
 resource "azurerm_kubernetes_cluster" "k8s" {
   name                = "${(var.prefix)}-aks"
-  location            = azurerm_resource_group.AFS-AKS.location
-  resource_group_name = azurerm_resource_group.AFS-AKS.name
+  location            = module.rg.rg_location
+  resource_group_name = module.rg.rg_name
   dns_prefix          = "${(var.prefix)}-k8s"
   
   
@@ -87,7 +87,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     node_count      = 2
     vm_size         = "Standard_D2_v2"
     os_disk_size_gb = 30
-    vnet_subnet_id  = azurerm_subnet.subnet.id
+    vnet_subnet_id  = module.rg.subnetID
   }
 
   identity {

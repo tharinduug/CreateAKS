@@ -22,7 +22,7 @@ module "nsg" {
   source = "./Modules/nsg"
   prefix = "Test"
   location = "West US 2"
-  rgname = module.rg.rg_name
+  rgname = "THHH"
 }
 resource "azurerm_network_security_group" "AFS-SG" {
   name                = "${(var.prefix)}-SG"
